@@ -21,7 +21,7 @@ class Solution(object):
         #             return [idx, idx + 1 + jdx]
         # return [None, None]
 
-        # use dictionary
+        # #3 use dictionary
         dict_nums = {}
         for idx, n in enumerate(nums):
             complement = target - nums[idx]
@@ -29,9 +29,27 @@ class Solution(object):
                 return [dict_nums.get(complement), idx]
             dict_nums[nums[idx]] = idx
 
+        # #4 one go with sorted array problem is not save source idexes
 
+        # dicts_nums = {}
+        # for idx, n in enumerate(nums):
+        #     dicts_nums[n] = idx
+        #
+        # nums = sorted(nums)
+        # # first pointer
+        # i = 0
+        # # second pointer
+        # j = len(nums) - 1
+        #
+        # while i < j:
+        #     if nums[i] + nums[j] == target:
+        #         return dicts_nums[nums[i]], dicts_nums[nums[j]]
+        #     elif nums[i] + nums[j] < target:
+        #         i += 1
+        #     else:
+        #         j -= 1
 
 
 
 s = Solution()
-s.twoSum([2, 7, 11, 15], 9)
+print(s.twoSum([2, 7, 11, 15], 9))

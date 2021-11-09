@@ -13,5 +13,5 @@ class Solution:
 
 
 sol = Solution()
-string = "Let's take LeetCode contest"
+string = "Let's take LeetCode_Easy contest"
 print(sol.reverseWords(string))

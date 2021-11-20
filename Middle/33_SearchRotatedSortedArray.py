@@ -14,17 +14,50 @@ You must write an algorithm with O(log n) runtime complexity.
 class Solution:
     def search(self, nums, target: int) -> int:
 
+        low, high = 0, len(nums) - 1
+        while low <= high:
+            middle = (low + high) // 2
+
+            if target == nums[middle]:
+                return middle
+            elif nums[middle] >= nums[low]:
+                if nums[middle] > target >= nums[low]:
+                    high = middle - 1
+                else:
+                    low = middle + 1
+            else:
+                if nums[middle] < target <= nums[high]:
+                    low = middle + 1
+                else:
+                    high = middle - 1
+
+        return -1
 
 
 sol = Solution()
-nums = [4, 5, 6, 7, 0, 1, 2]
+nums = [4, 5, 6, 7, 9, 0, 1, 2, 3]
 target = 0
 
 print(sol.search(nums, target))
 
-
-nums = [0, 1, 2, 4, 5, 6, 7]
-target = 0
-
-print(sol.search(nums, target))
+#
+# nums = [8, 0, 1, 2, 4, 5, 6, 7]
+# target = 0
+#
+# print(sol.search(nums, target))
+#
+# nums = [8, 10, 0, 1, 2, 4, 5, 6, 7]
+# target = 0
+#
+# print(sol.search(nums, target))
+#
+# nums = [0]
+# target = 0
+#
+# print(sol.search(nums, target))
+#
+# nums = [1]
+# target = 0
+#
+# print(sol.search(nums, target))
 

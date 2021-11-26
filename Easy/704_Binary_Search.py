@@ -18,19 +18,17 @@ class Solution:
         if target > nums[high]:
             return -1
 
-        middle = (high + low) // 2
-        while target != nums[middle] and low <= high:
+        while low <= high:
+            middle = (high + low) // 2
 
-            if target < nums[middle]:
+            if target == nums[middle]:
+                return middle
+            elif target < nums[middle]:
                 high = middle - 1
             else:
                 low = middle + 1
-            middle = (high + low) // 2
 
-        if target == nums[middle]:
-            return middle
-        else:
-            return -1
+        return -1
 
 
 sol = Solution()
@@ -43,4 +41,12 @@ print(sol.search(arr, t))
 
 arr = [5]
 t = 5
+print(sol.search(arr, t))
+
+arr = [1]
+t = 5
+print(sol.search(arr, t))
+
+arr = [5,7,7,8,8,10]
+t = 6
 print(sol.search(arr, t))

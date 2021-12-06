@@ -50,3 +50,7 @@ print(sol.search(arr, t))
 arr = [5,7,7,8,8,10]
 t = 6
 print(sol.search(arr, t))
+
+arr = [1, 3]
+t = 2
+print(sol.search(arr, t))

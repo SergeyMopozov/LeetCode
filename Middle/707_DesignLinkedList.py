@@ -5,7 +5,7 @@ val is the value of the current node, and next is a pointer/reference to the nex
 If you want to use the doubly linked list, you will need one more attribute prev to indicate
 the previous node in the linked list. Assume all nodes in the linked list are 0-indexed.
 """
-
+# singly linked list
 class Node:
     def __init__(self):
         self.value = None
@@ -24,6 +24,7 @@ class MyLinkedList:
     def __init__(self):
         self.head = Node()
 
+
     def get(self, index: int) -> int:
         pointer = self.head
         for i in range(index):
@@ -31,7 +32,10 @@ class MyLinkedList:
                 pointer = pointer.next
             else:
                 return -1
-        return pointer.value
+        if pointer.value is not None:
+            return pointer.value
+        else:
+            return -1
 
     def addAtHead(self, val: int) -> None:
         if self.head.value is None:
@@ -39,66 +43,62 @@ class MyLinkedList:
         else:
             new = Node()
             new.value = val
-            self.head.prev = new
             new.next = self.head
             self.head = new
 
     def addAtTail(self, val: int) -> None:
         if self.head.value is None:
             return self.addAtHead(val)
+        else:
+            pointer = self.head
+            while pointer.next is not None:
+                pointer = pointer.next
 
-        pointer = self.head
-        while pointer.next is not None:
-            pointer = pointer.next
-        new = Node()
-        new.value = val
-        new.prev = pointer
-        pointer.next = new
+            new = Node()
+            new.value = val
+            pointer.next = new
 
     def addAtIndex(self, index: int, val: int) -> None:
         if index == 0:
             return self.addAtHead(val)
-
+        # find list len
         length = 0
         pointer = self.head
-        while pointer is not None:
+        while pointer is not None and pointer.value is not None:
             pointer = pointer.next
             length += 1
 
         if index == length:
             self.addAtTail(val)
-        else:
+        elif index < length:
             pointer = self.head
-            for i in range(index):
+            for i in range(index-1):
                 if pointer.next is not None:
                     pointer = pointer.next
                 else:
                     return
-
             new = Node()
             new.value = val
-            new.next = pointer
-            pointer.prev.next = new
-            new.prev = pointer.prev
-            pointer.prev = new
+            next_pointer = pointer.next
+            new.next = next_pointer
+            pointer.next = new
 
     def deleteAtIndex(self, index: int) -> None:
-        pointer = self.head
-        for i in range(index):
-            if pointer.next is not None:
-                pointer = pointer.next
-            else:
-                return
-        if pointer.prev is not None:
-            pointer.prev.next = pointer.next
-        else:
-            pointer.prev = None
-            self.head = pointer.next
 
-        if pointer.next is not None:
-            pointer.next.prev = pointer.prev
+        if index == 0:
+            if self.head.next is not None:
+                self.head = self.head.next
+            else:
+                self.head.value = None
         else:
-            pointer.next = None
+            pointer = self.head
+            for i in range(index-1):
+                if pointer.next is not None:
+                    pointer = pointer.next
+                else:
+                    return
+            if pointer.next is not None:
+                pointer.next = pointer.next.next
 
 
 
@@ -110,23 +110,13 @@ class MyLinkedList:
 # [null,null,null,null,null,null,null,null,4,null,null,null]
 
 my_list = MyLinkedList()
-my_list.addAtHead(7)
-my_list.addAtHead(2)
+
+print(my_list)
 my_list.addAtHead(1)
+my_list.addAtHead(2)
+print(my_list.addAtIndex(1, 0))
 print(my_list)
-my_list.addAtIndex(3, 0)
-print(my_list)
-my_list.deleteAtIndex(2)
-print(my_list)
-my_list.addAtHead(6)
-my_list.addAtTail(4)
-print(my_list)
-print(my_list.get(4))
-my_list.addAtHead(4)
-my_list.addAtIndex(0, 1)
-my_list.addAtHead(6)
-print(my_list)
-my_list.deleteAtIndex(0)
-print(my_list)
-print(my_list.get(4))
+print(my_list.get(0))
+
+
 

@@ -5,27 +5,7 @@ You can return the answer in any order.
 
 class Solution:
     def permute(self, nums):
-        #
-        # def _backtrack(idx, curr, pool):
-        #
-        #     if idx >= len(pool) or len(pool) == 0:
-        #         if len(curr) == 3:
-        #             result.append(curr.copy())
-        #         return
-        #
-        #     curr.append(pool[idx])
-        #     p = pool.copy()
-        #     p.pop(idx)
-        #     _backtrack(idx, curr, p)
-        #
-        #
-        #     p = pool.copy()
-        #     _backtrack(idx+1, [], p)
-        #
-        # result = []
-        # _backtrack(0, [], nums.copy())
-        #
-        # return result
+
         def _perm(nums):
             # pool of combinations
             pool = tuple(nums)

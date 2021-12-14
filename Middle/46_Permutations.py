@@ -6,32 +6,55 @@ You can return the answer in any order.
 class Solution:
     def permute(self, nums):
 
-        def _perm(nums):
-            # pool of combinations
-            pool = tuple(nums)
-            # len of combinations
-            n = len(pool)
+        # def _perm(nums):
+        #     # pool of combinations
+        #     pool = tuple(nums)
+        #     # len of combinations
+        #     n = len(pool)
+        #
+        #     indices = list(range(n))
+        #     cycles = list(range(n, 0, -1))
+        #
+        #     yield tuple(pool[i] for i in indices[:n])
+        #
+        #     while n:
+        #         for i in reversed(range(n)):
+        #             cycles[i] -= 1
+        #             if cycles[i] == 0:
+        #                 indices[i:] = indices[i + 1:] + indices[i:i + 1]
+        #                 cycles[i] = n - i
+        #             else:
+        #                 j = cycles[i]
+        #                 indices[i], indices[-j] = indices[-j], indices[i]
+        #                 yield tuple(pool[i] for i in indices[:n])
+        #                 break
+        #         else:
+        #             return
+        #
+        # return [list(p) for p in _perm(nums)]
 
-            indices = list(range(n))
-            cycles = list(range(n, 0, -1))
+        curr = []
+        result = []
+        n = len(nums)
+        available = [1]*n
 
-            yield tuple(pool[i] for i in indices[:n])
+        def _dfs():
+            if len(curr) == n:
+                result.append(curr.copy())
+                return
+            for i in range(n):
+                if available[i] == 1:
+                    curr.append(nums[i])
+                    available[i] = 0
+                    _dfs()
 
-            while n:
-                for i in reversed(range(n)):
-                    cycles[i] -= 1
-                    if cycles[i] == 0:
-                        indices[i:] = indices[i + 1:] + indices[i:i + 1]
-                        cycles[i] = n - i
-                    else:
-                        j = cycles[i]
-                        indices[i], indices[-j] = indices[-j], indices[i]
-                        yield tuple(pool[i] for i in indices[:n])
-                        break
-                else:
-                    return
+                    available[i] = 1
+                    curr.pop()
 
-        return [list(p) for p in _perm(nums)]
+        _dfs()
+        return result
+
+
 
 sol = Solution()
 nums = [1, 2, 3]

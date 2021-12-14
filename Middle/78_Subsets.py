@@ -7,13 +7,13 @@ The solution set must not contain duplicate subsets. Return the solution in any 
 
 class Solution:
     def subsets(self, nums):
-        output = [[]]
-
-        for num in nums:
-            #print(output)
-            output += [curr + [num] for curr in output]
-
-        return output
+        # output = [[]]
+        #
+        # for num in nums:
+        #     #print(output)
+        #     output += [curr + [num] for curr in output]
+        #
+        # return output
 
         # n = len(nums)
         # output = []
@@ -27,6 +27,25 @@ class Solution:
         #     output.append([nums[j] for j in range(n) if bitmask[j] == '1'])
         #
         # return output
+
+        def backtrack(first, curr):
+            # if the combination is done
+            if len(curr) == k:
+                output.append(curr[:])
+                return
+            for i in range(first, n):
+                # add nums[i] into the current combination
+                curr.append(nums[i])
+                # use next integers to complete the combination
+                backtrack(i + 1, curr)
+                # backtrack
+                curr.pop()
+
+        output = []
+        n = len(nums)
+        for k in range(n + 1):
+            backtrack(0, [])
+        return output
 
 
 sol = Solution()
